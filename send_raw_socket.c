@@ -13,7 +13,9 @@ int32_t get_domain_ip_addr(char *domain_name)
 	struct addrinfo	hints;
 	struct addrinfo	*res;
 	struct addrinfo *tmp_r;
-	char buffer[INET6_ADDRSTRLEN];
+	int				buff_idx;
+	char **buffer;
+	// char buffer[INET6_ADDRSTRLEN];
 	
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family = AF_UNSPEC;
@@ -25,19 +27,33 @@ int32_t get_domain_ip_addr(char *domain_name)
 
 	tmp_r = res;
 
+	buffer = malloc(0);
+	buff_idx = 0;
+
 	while (tmp_r) {
 		void *addr;
+		char **tmp;
 		if (tmp_r->ai_family == AF_INET) {
 			struct sockaddr_in *ipv4 = (struct sockaddr_in *)tmp_r->ai_addr;
-			
-			inet_ntop(tmp_r->ai_family, &(ipv4->sin_addr), buffer, sizeof buffer);
-			printf("[ IPV4 ] -> %s\n", buffer);
+			tmp = realloc(buffer, sizeof(char *) * (buff_idx + 1));
+			if (!tmp)
+				return (0);
+			buffer = tmp;
+			buffer[buff_idx] = malloc(sizeof(char) * INET6_ADDRSTRLEN);
+
+			inet_ntop(tmp_r->ai_family, &(ipv4->sin_addr), buffer[buff_idx], INET6_ADDRSTRLEN);
+			printf("[ IPV4 ] -> %s\n", buffer[buff_idx]);
 		} else {
+			tmp = realloc(buffer, sizeof(char *) * (buff_idx + 1));
+			if (!tmp)
+				return (0);
+			buffer = tmp;
 			struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 *)tmp_r->ai_addr;
-			inet_ntop(tmp_r->ai_family, &(ipv6->sin6_addr), buffer, sizeof buffer);
-			printf("[ IPV6 ] -> %s\n", buffer);
+			inet_ntop(tmp_r->ai_family, &(ipv6->sin6_addr), buffer[buff_idx], INET6_ADDRSTRLEN);
+			printf("[ IPV6 ] -> %s\n", buffer[buff_idx]);
 		}
 		tmp_r = tmp_r->ai_next;
+		buff_idx++;
 	}
 	return 0;
 }
