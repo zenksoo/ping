@@ -14,6 +14,7 @@ int main(int argc, char **argv) {
         {"help",    no_argument, 0, 'h'},
         {0,         0,           0, 0}
     };
+
 	i = 0;
 	while (++i < argc)
 	{
