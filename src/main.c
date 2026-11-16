@@ -1,11 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <getopt.h>
+#include "ping.h"
 
 int main(int argc, char **argv) {
 	int	count;
 	int	opt;
 	int i;
+
+	display_error();
 	
 	static struct option long_options[] = {
         {"count", no_argument, 0, 'c'},
@@ -19,7 +19,6 @@ int main(int argc, char **argv) {
 			switch (opt) {
 				case 'c':
 					count = atoi(argv[i + 1]);
-					printf("tzzz");
 					break;
 				case 'h':
 					printf("Usage: %s [-c] [-h]\n", argv[0]);

@@ -2,11 +2,9 @@ CC = cc -fsanitize=address -g3
 
 RM = rm -rf
 
-SRC = main.c
-
 TARGET = ping
 
-FILES = main.c
+FILES = main.c common.c
 
 INCLUDE_DIR = include/
 SRC_DIR = src/
