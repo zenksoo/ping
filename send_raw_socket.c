@@ -7,7 +7,6 @@
 
 int32_t get_domain_ip_addr(char *domain_name)
 {
-	
 	return 0;
 }
 

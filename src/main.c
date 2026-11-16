@@ -5,7 +5,9 @@ int main(int argc, char **argv) {
 	int	opt;
 	int i;
 
-	display_error();
+	display_messge(2, "invalid argument\n", ERR_MSG);
+	display_messge(1, "normal msg :)\n", NORMAL_MSG);
+	display_messge(1, "warn msg :)\n", WARN_MSG);
 	
 	static struct option long_options[] = {
         {"count", no_argument, 0, 'c'},
@@ -18,7 +20,12 @@ int main(int argc, char **argv) {
 		if ((opt = getopt_long(argc, argv, "ch:", long_options, NULL)) != -1) {
 			switch (opt) {
 				case 'c':
-					count = atoi(argv[i + 1]);
+					if (i + 1 < argc)
+						count = atoi(argv[i + 1]);
+					else {
+						display_messge(2, "Missing Value for [-c] flag", ERR_MSG);
+						return 1;
+					}
 					break;
 				case 'h':
 					printf("Usage: %s [-c] [-h]\n", argv[0]);
