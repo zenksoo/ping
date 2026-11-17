@@ -17,7 +17,7 @@ char **get_domain_ip_addr(char *domain_name)
 	int				buff_idx;
 	char			**buffer;
 	char			**tmp;
-	
+
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
@@ -31,7 +31,6 @@ char **get_domain_ip_addr(char *domain_name)
 	buffer = calloc(0, 0);
 	buff_idx = 0;
 	while (tmp_r) {
-		void *addr;
 		if (tmp_r->ai_family == AF_INET) {
 			struct sockaddr_in *ipv4 = (struct sockaddr_in *)tmp_r->ai_addr;
 			tmp = realloc(buffer, sizeof(char *) * (buff_idx + 1));
@@ -68,7 +67,7 @@ int main(int argc, char **argv) {
 
 	sock_addr = malloc(sizeof(struct sockaddr_in));
 	sock_addr->sin_family = AF_INET;
-	sock_addr->sin_port = htons(6767); 
+	sock_addr->sin_port = htons(6767);
 	sock_addr->sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 
 	printf("%d\n", sock_addr->sin_addr.s_addr);

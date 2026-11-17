@@ -1,5 +1,6 @@
-CC = cc -fsanitize=address -g3
-
+CC = cc
+MEM_CHECK = -fsanitize=address -g3
+# MEM_CHECK =
 RM = rm -rf
 
 TARGET = ping
@@ -14,7 +15,7 @@ OBJ= $(addprefix $(BUILD_DIR), $(FILES:.c=.o))
 
 
 $(TARGET): $(BUILD_DIR) $(OBJ)
-	$(CC) $(OBJ) -o $@
+	$(CC) $(MEM_CHECK) $(OBJ) -o $@
 
 
 $(BUILD_DIR):
@@ -22,8 +23,8 @@ $(BUILD_DIR):
 
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) -I$(INCLUDE_DIR) -c $< -o $@
-	
+	$(CC) $(MEM_CHECK) -I$(INCLUDE_DIR) -c $< -o $@
+
 all: $(TARGET)
 
 clean:

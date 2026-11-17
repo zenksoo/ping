@@ -1,49 +1,39 @@
 #include "ping.h"
 
+void cleanup(struct ipaddr *res) {
+	for (int i = 0; i < res->ipv4_buff_size; i++)
+		free(res->ipv4_buffers[i]);
+
+	for (int i = 0; i < res->ipv6_buff_size; i++)
+		free(res->ipv6_buffers[i]);
+
+	free(res->ipv4_buffers);
+	free(res->ipv6_buffers);
+
+	free(res);
+}
+
 int main(int argc, char **argv) {
 	int	count;
 	int	opt;
 	int i;
+	char buffer[INET6_ADDRSTRLEN];
+	struct ipaddr *res; // get ip adds as string for the target end system
 
-	getip(argv[1]);
+	if (argc < 2)
+		return (fprintf(stderr, "ping: Usage: ping [OPTION] [DEST...]\n"), 1);
 
-	if (argc < 2) {
-		fprintf(stderr, "ping: Usage: ping [OPTION] [DEST...]\n");
+	res = getip(argv[1]);
+	if (!res)
 		return 1;
-	}
 
-	display_messge(2, "invalid argument\n", ERR_MSG);
-	display_messge(1, "normal msg :)\n", NORMAL_MSG);
-	display_messge(1, "warn msg :)\n", WARN_MSG);
-	
-	static struct option long_options[] = {
-        {"count", no_argument, 0, 'c'},
-        {"help",    no_argument, 0, 'h'},
-        {0,         0,           0, 0}
-    };
+	printf("%d -- %d\n", res->ipv4_buff_size, res->ipv6_buff_size);
 
-	i = 0;
-	while (++i < argc)
-	{
-		if ((opt = getopt_long(argc, argv, "ch:", long_options, NULL)) != -1) {
-			switch (opt) {
-				case 'c':
-					if (i + 1 < argc)
-						count = atoi(argv[i + 1]);
-					else {
-						display_messge(2, "Missing Value for [-c] flag", ERR_MSG);
-						return 1;
-					}
-					break;
-				case 'h':
-					printf("Usage: %s [-c] [-h]\n", argv[0]);
-					return 0;
-				default:
-					continue;
-			}
-		}
-		printf("%s\n", argv[i]);
-	}
-	printf("%d\n", count);
+	for (int i = 0; i < res->ipv4_buff_size; i++)
+		printf("IPV4 -> %s\n", res->ipv4_buffers[i]);
+
+	for (int i = 0; i < res->ipv6_buff_size; i++)
+		printf("IPV6 -> %s\n", res->ipv6_buffers[i]);
+	cleanup(res);
 	return 0;
 }
