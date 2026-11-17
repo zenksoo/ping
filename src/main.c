@@ -5,6 +5,13 @@ int main(int argc, char **argv) {
 	int	opt;
 	int i;
 
+	getip(argv[1]);
+
+	if (argc < 2) {
+		fprintf(stderr, "ping: Usage: ping [OPTION] [DEST...]\n");
+		return 1;
+	}
+
 	display_messge(2, "invalid argument\n", ERR_MSG);
 	display_messge(1, "normal msg :)\n", NORMAL_MSG);
 	display_messge(1, "warn msg :)\n", WARN_MSG);

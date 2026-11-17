@@ -4,7 +4,7 @@ RM = rm -rf
 
 TARGET = ping
 
-FILES = main.c common.c
+FILES = main.c common.c getip.c
 
 INCLUDE_DIR = include/
 SRC_DIR = src/

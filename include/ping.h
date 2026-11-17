@@ -7,11 +7,15 @@
 #include <unistd.h>
 #include <string.h>
 #include <getopt.h>
+#include <netdb.h>
+#include <netinet/in.h>
 
 #define ERR_MSG 1
 #define WARN_MSG 2
 #define NORMAL_MSG 3
 #define	USAGE_ERR 4
+
+void	getip(char *);
 
 // helper functions
 void	display_messge(int fd, char *msg, int msgType);
