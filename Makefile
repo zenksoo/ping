@@ -1,5 +1,5 @@
 CC = cc
-MEM_CHECK = -fsanitize=address -g3
+MEM_CHECK = -fsanitize=address -ggdb
 # MEM_CHECK =
 RM = rm -rf
 
@@ -13,14 +13,11 @@ BUILD_DIR = build/
 
 OBJ= $(addprefix $(BUILD_DIR), $(FILES:.c=.o))
 
-
 $(TARGET): $(BUILD_DIR) $(OBJ)
 	$(CC) $(MEM_CHECK) $(OBJ) -o $@
 
-
 $(BUILD_DIR):
 		mkdir $(BUILD_DIR)
-
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(MEM_CHECK) -I$(INCLUDE_DIR) -c $< -o $@

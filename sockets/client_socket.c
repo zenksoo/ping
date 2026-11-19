@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
 	int 				i;
 	sock_addr.sin_family = AF_INET;
 	sock_addr.sin_port = htons(6767);
-	inet_pton(AF_INET, "127.0.0.1", &sock_addr.sin_addr.s_addr);
+	inet_pton(AF_INET, "10.12.4.12", &sock_addr.sin_addr.s_addr);
 
 	printf("%u\n", sock_addr.sin_addr.s_addr);
 

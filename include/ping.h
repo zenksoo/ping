@@ -12,6 +12,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <netinet/ip_icmp.h>
 
 #define OTHER 0
 #define ERR_MSG 1
