@@ -21,6 +21,8 @@
 #define	USAGE_ERR 4
 #define UNKOWN_HOST 5
 
+#define PAYLOAD_SIZE sizeof(struct timeval)
+
 struct ipaddr {
 	// list of ips as string
 	char	**ipv4_buffers;
